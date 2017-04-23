@@ -2,7 +2,7 @@
  * Created by sanketsharma on 2017/04/22.
  */
 import Ember from 'ember';
-import layout from '../templates/components/socivo-intl-tel-input';
+import layout from '../templates/components/intl-tel-input';
 
 export default Ember.TextField.extend({
   layout: layout,

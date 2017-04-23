@@ -1,5 +1,5 @@
 {
-  "name": "socivo-intl-tel-input",
+  "name": "ember-cli-intl-tel-input",
   "dependencies": {},
   "devDependencies": {
     "intl-tel-input": "^11.0.11"

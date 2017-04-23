@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = {
-  name: 'socivo-intl-tel-input',
+  name: 'ember-cli-intl-tel-input',
   included: function(app) {
     this._super.included(app);
 
