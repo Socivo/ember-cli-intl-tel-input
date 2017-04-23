@@ -1,4 +1,4 @@
-# socivo-intl-tel-input
+# ember-cli-intl-tel-input
 
 This README outlines the details of collaborating on this Ember addon.
 
