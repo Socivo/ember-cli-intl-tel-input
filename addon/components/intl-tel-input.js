@@ -69,6 +69,21 @@ export default Ember.TextField.extend({
    */
   defaultCountry: '',
 
+
+  /**
+   * Set the initial country selection by specifying it's country code.
+   * You can also set it to "auto", which will lookup the user's country based on their IP address (requires the geoIpLookup option - see example).
+   * Note that the "auto" option will not update the country selection if the input already contains a number.
+   * If you leave initialCountry blank, it will default to the first country in the list.
+   *
+   * @property initialCountry
+   * @type String
+   * @default ""
+   */
+  initialCountry: '',
+
+
+
   /**
    * When setting `defaultCountry` to `"auto"`, we need to use a special
    * service to lookup the location data for the user. Write a custom method to
