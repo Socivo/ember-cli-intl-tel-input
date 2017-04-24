@@ -307,6 +307,7 @@ export default Ember.TextField.extend({
       numberType: this.get('numberType'),
       onlyCountries: this.get('onlyCountries'),
       preferredCountries: this.get('preferredCountries'),
+      initialCountry: this.get('initialCountry')
     });
   },
 

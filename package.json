@@ -12,7 +12,14 @@
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": {
+    "type":"git",
+    "url":"git@github.com:Socivo/ember-cli-intl-tel-input.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Socivo/ember-cli-intl-tel-input/issues",
+    "email": "sanket.sharma@socivo.io"
+  },
   "scripts": {
     "build": "ember build",
     "start": "ember server",
