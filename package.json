@@ -13,8 +13,8 @@
     "test": "tests"
   },
   "repository": {
-    "type":"git",
-    "url":"git@github.com:Socivo/ember-cli-intl-tel-input.git"
+    "type": "git",
+    "url": "git@github.com:Socivo/ember-cli-intl-tel-input.git"
   },
   "bugs": {
     "url": "https://github.com/Socivo/ember-cli-intl-tel-input/issues",
@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "ember-cli-babel": "^5.1.7",
-    "ember-cli-htmlbars": "^1.1.1"
+    "ember-cli-htmlbars": "^1.1.1",
+    "intl-tel-input": "^12.0.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -58,7 +59,3 @@
     "configPath": "tests/dummy/config"
   }
 }
-
-
-
-
