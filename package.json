@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-intl-tel-input",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "An Ember.js wrapper for intl-tel-input library by Jack O'Connor (https://github.com/jackocnr/intl-tel-input). The plugin is based on ember-intl-tel-input by Justin Lau(http://justin-lau.github.io/ember-intl-tel-input). The plugin was created as the original plugin is no longer actively upgraded and mainted for new versions of Ember.js and jquery.",
   "keywords": [
     "ember-addon"
@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "ember-cli-babel": "^5.1.7",
-    "ember-cli-htmlbars": "^1.1.1"
+    "ember-cli-htmlbars": "^1.1.1",
+    "intl-tel-input": "^12.0.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -49,7 +50,6 @@
     "ember-resolver": "^2.0.3",
     "ember-source": "~2.12.0",
     "ember-welcome-page": "^2.0.2",
-    "intl-tel-input": "^12.0.1",
     "loader.js": "^4.2.3"
   },
   "engines": {
