@@ -1,7 +1,0 @@
-{
-  "name": "ember-cli-intl-tel-input",
-  "dependencies": {},
-  "devDependencies": {
-    "intl-tel-input": "^12.0.1"
-  }
-}
