@@ -151,7 +151,7 @@ export default Ember.TextField.extend({
    * @type Boolean
    * @default true
    */
-  formatOnDisplay: null,
+  formatOnDisplay: true,
 
 
   /**
@@ -175,7 +175,7 @@ export default Ember.TextField.extend({
    * @type Boolea
    * @default false
    */
-  separateDialCode: 'false',
+  separateDialCode: false,
 
 
   /**
