@@ -402,7 +402,6 @@ export default Ember.TextField.extend({
       dropdownContainer: this.get('dropdownContainer'),
       initialCountry: this.get('initialCountry'),
       hiddenInput: this.get('hiddenInput'),
-      initialCountry: this.get('initialCountry'),
       excludeCountries: this.get('excludeCountries'),
       geoIpLookup: this.get('geoIpLookup'),
       formatOnDisplay: this.get('formatOnDisplay'),
