@@ -303,7 +303,14 @@ export default Ember.TextField.extend({
     },
     set(key, newValue) {
       if (this.get('hasUtilsScript') && newValue) {
-        this.$().intlTelInput('setNumber', newValue);
+        if (this.$()) {
+          this.$().intlTelInput('setNumber', newValue);
+        } else {
+          // It's possible the component isn't in the DOM yet
+          Ember.run.schedule('afterRender', () => {
+            this.$().intlTelInput('setNumber', newValue);
+          });
+        }
       }
     }
   }),
