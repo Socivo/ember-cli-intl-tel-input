@@ -4,7 +4,7 @@
 
 module.exports = {
   normalizeEntityName: function() {}, // no-op since we're just adding dependencies
-  afterInstall: function() {
+    afterInstall() {
     return this.addPackagesToProject([{name:'intl-tel-input'}]); // is a promise
   }
 };

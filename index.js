@@ -40,7 +40,7 @@ module.exports = {
     return styleTree;
   },
   isDevelopingAddon() {
-    return true;
+    return false;
   }
 
 };
