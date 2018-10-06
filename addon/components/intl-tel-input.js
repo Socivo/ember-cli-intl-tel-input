@@ -1,11 +1,19 @@
 /**
  * Created by sanketsharma on 2017/04/22.
  */
-import Ember from 'ember';
+import TextField from '@ember/component/text-field';
 import layout from '../templates/components/intl-tel-input';
+import { run } from '@ember/runloop';
+import { computed } from '@ember/object';
 
-export default Ember.TextField.extend({
-  layout: layout,
+const intlTelInputUtils = window ? window.intlTelInputUtils : null;
+const intlTelInput = window ? window.intlTelInput : null;
+
+let excludeCountries = [];
+let preferredCountries = ['us', 'gb'];
+
+export default TextField.extend({
+  layout,
   tagName: 'input',
   attributeBindings: ['type'],
   type: 'tel',
@@ -128,7 +136,7 @@ export default Ember.TextField.extend({
    * @type Array
    * @default empty
    */
-   excludeCountries: [],
+   excludeCountries,
 
 
 
@@ -215,11 +223,10 @@ export default Ember.TextField.extend({
    * @type String
    * @default "MOBILE"
    */
-  numberType: Ember.computed('number', {
+  numberType: computed('number', {
     get() {
-      if (this.get('hasUtilsScript')) {
-
-        let typeNumber = this.$().intlTelInput('getNumberType');
+      if (this.get('hasUtilsScript') && this.itl) {
+        let typeNumber = this.itl.getNumberType();
         for (let key in intlTelInputUtils.numberType) {
           if (intlTelInputUtils.numberType[key] === typeNumber) {
             return key;
@@ -255,7 +262,7 @@ export default Ember.TextField.extend({
    * @type Array
    * @default ["us", "gb"]
    */
-  preferredCountries: ['us', 'gb'],
+  preferredCountries,
 
   /**
    * Specify the format of the `number` property. Requires the utilities
@@ -272,7 +279,7 @@ export default Ember.TextField.extend({
    * @default 'E164'
    */
   _numberFormat: 'E164',
-  numberFormat: Ember.computed('value', {
+  numberFormat: computed('value', {
     get() {
       return this.get('_numberFormat');
     },
@@ -294,21 +301,21 @@ export default Ember.TextField.extend({
    * @type String
    * @readOnly
    */
-  number: Ember.computed('value', 'numberFormat', {
+  number: computed('value', 'numberFormat', {
     get() {
       if (this.get('hasUtilsScript')) {
         let numberFormat = intlTelInputUtils.numberFormat[this.get('numberFormat')];
-        return this.$().intlTelInput('getNumber', numberFormat);
+        return this.itl.getNumber(numberFormat);
       }
     },
     set(key, newValue) {
       if (this.get('hasUtilsScript') && newValue) {
         if (this.$()) {
-          this.$().intlTelInput('setNumber', newValue);
+          this.itl.setNumber(newValue);
         } else {
           // It's possible the component isn't in the DOM yet
-          Ember.run.schedule('afterRender', () => {
-            this.$().intlTelInput('setNumber', newValue);
+          run.schedule('afterRender', () => {
+            this.itl.setNumber(newValue);
           });
         }
       }
@@ -323,9 +330,9 @@ export default Ember.TextField.extend({
    * @type String
    * @readOnly
    */
-  extension: Ember.computed('number', {
+  extension: computed('number', {
     get() {
-      return this.$().intlTelInput('getExtension');
+      return this.itl.getExtension();
     },
     set() { /* no-op */ }
   }),
@@ -337,9 +344,9 @@ export default Ember.TextField.extend({
    * @type Object
    * @readOnly
    */
-  selectedCountryData: Ember.computed('value', {
+  selectedCountryData: computed('value', {
     get() {
-      return this.$().intlTelInput('getSelectedCountryData');
+      return this.itl.getSelectedCountryData();
     },
     set() { /* no-op */ }
   }),
@@ -351,9 +358,9 @@ export default Ember.TextField.extend({
    * @type Boolean
    * @readOnly
    */
-  isValidNumber: Ember.computed('number', {
+  isValidNumber: computed('number', {
     get() {
-      return this.$().intlTelInput('isValidNumber');
+      return this.itl.isValidNumber();
     },
     set() { /* no-op */ }
   }),
@@ -366,10 +373,10 @@ export default Ember.TextField.extend({
    * @type String
    * @readOnly
    */
-  validationError: Ember.computed('number', {
+  validationError: computed('number', {
     get() {
       if (this.get('hasUtilsScript')) {
-        let errorNumber = this.$().intlTelInput('getValidationError');
+        let errorNumber = this.itl.getValidationError();
         for (let key in intlTelInputUtils.validationError) {
           if (intlTelInputUtils.validationError[key] === errorNumber) {
             return key;
@@ -387,7 +394,7 @@ export default Ember.TextField.extend({
    * @type Boolean
    * @readOnly
    */
-  hasUtilsScript: Ember.computed({
+  hasUtilsScript: computed({
     get() {
       return (typeof intlTelInputUtils !== 'undefined');
     },
@@ -400,12 +407,13 @@ export default Ember.TextField.extend({
    * @method didInsertElement
    */
   didInsertElement() {
+    let input = this._input();
     let notifyPropertyChange = this.notifyPropertyChange.bind(this, 'value');
 
     // let Ember be aware of the changes
-    this.$().change(notifyPropertyChange);
+    input.addEventListener('change', notifyPropertyChange);
 
-    this.$().intlTelInput({
+    let itl = intlTelInput(input, {
       allowDropdown: this.get('allowDropdown'),
       autoHideDialCode: this.get('autoHideDialCode'),
       autoPlaceholder: this.get('autoPlaceholder'),
@@ -421,11 +429,10 @@ export default Ember.TextField.extend({
       nationalMode: this.get('nationalMode'),
       onlyCountries: this.get('onlyCountries'),
       preferredCountries: this.get('preferredCountries'),
-      numberType: this.get('numberType'),
-
-
-
+      numberType: this.get('numberType')
     });
+
+    this.set('itl', itl);
   },
 
   /**
@@ -434,6 +441,10 @@ export default Ember.TextField.extend({
    * @method willDestroyElement
    */
   willDestroyElement() {
-    this.$().intlTelInput('destroy');
+    this.itl.destroy();
   },
+
+  _input() {
+    return document.querySelector(`#${this.elementId}`);
+  }
 });

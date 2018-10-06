@@ -35,6 +35,7 @@
     "broccoli-stew": "^1.5.0",
     "ember-cli-babel": "^6.16.0",
     "ember-cli-htmlbars": "^1.1.1",
+    "fastboot-transform": "^0.1.3",
     "intl-tel-input": "^14.0.2"
   },
   "devDependencies": {

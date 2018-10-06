@@ -1,27 +1,36 @@
 'use strict';
-var path = require('path');
-var Funnel = require('broccoli-funnel');
+
+const path = require('path');
+const fastbootTransform = require('fastboot-transform');
+const Funnel = require('broccoli-funnel');
 
 module.exports = {
   name: 'ember-cli-intl-tel-input',
+
   included: function(app) {
-    this._super.included(app);
-    var config = app.options.intlTelInput;
+    this._super.included.apply(this, arguments);
+
+    let config = app.options.intlTelInput;
+    let assetPath = path.join('node_modules', 'intl-tel-input', 'build');
+    let importOptions = {
+      using: [{
+        transformation: 'fastbootTransform'
+      }]
+    };
+
     if (config && true === config.includeUtilsScript) {
-      app.import('vendor/utils.js');
+      app.import(path.join(assetPath, 'js', 'utils.js'), importOptions);
     }
-    app.import('vendor/intlTelInput.js');
-    app.import('vendor/intlTelInput.css');
-    
+
+    app.import({
+      development: path.join(assetPath, 'js', 'intlTelInput.js'),
+      production: path.join(assetPath, 'js', 'intlTelInput.js.min')
+    }, importOptions);
+
+    app.import(path.join(assetPath, 'css', 'intlTelInput.css'));
   },
-  treeForVendor(tree) {
-    let intlTelInputJSPath = path.join(this.app.project.root, 'node_modules', 'intl-tel-input', 'build', 'js');
-    let vendorTree = new Funnel(intlTelInputJSPath, {
-      files: ['intlTelInput.js', 'utils.js']
-    });
-    return vendorTree;
-  },
-  treeForPublic(tree) {
+
+  treeForPublic() {
     let intlTelInputImagePath = path.join(this.app.project.root, 'node_modules', 'intl-tel-input', 'build', 'img');
     let publicTree = new Funnel(intlTelInputImagePath, {
       include: ['*.png'],
@@ -29,16 +38,10 @@ module.exports = {
     });
     return publicTree;
   },
-  treeForStyles(tree) {
-    let intlTelInputStylePath = path.join(this.app.project.root, 'node_modules', 'intl-tel-input', 'build', 'css');
-    let styleTree = new Funnel(intlTelInputStylePath, {
-      include: ['*.css'],
-      destDir: 'vendor'
-      
-    });
-    return styleTree;
+
+  importTransforms: function () {
+    return {
+      fastbootTransform: fastbootTransform
+    }
   },
-  isDevelopingAddon() {
-    return false;
-  }
 };
