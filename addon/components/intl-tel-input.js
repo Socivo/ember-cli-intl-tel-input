@@ -10,6 +10,7 @@ const intlTelInputUtils = window ? window.intlTelInputUtils : null;
 const intlTelInput = window ? window.intlTelInput : null;
 
 let excludeCountries = [];
+let onlyCountries = [];
 let preferredCountries = ['us', 'gb'];
 
 export default TextField.extend({
@@ -253,7 +254,7 @@ export default TextField.extend({
    * @type Array
    * @default "MOBILE"
    */
-  onlyCountries: undefined,
+  onlyCountries,
 
   /**
    * Specify the countries to appear at the top of the list.
@@ -310,7 +311,7 @@ export default TextField.extend({
     },
     set(key, newValue) {
       if (this.get('hasUtilsScript') && newValue) {
-        if (this.$()) {
+        if (this.element) {
           this.itl.setNumber(newValue);
         } else {
           // It's possible the component isn't in the DOM yet
@@ -407,7 +408,7 @@ export default TextField.extend({
    * @method didInsertElement
    */
   didInsertElement() {
-    let input = this._input();
+    let input = this.element;
     let notifyPropertyChange = this.notifyPropertyChange.bind(this, 'value');
 
     // let Ember be aware of the changes
@@ -442,9 +443,5 @@ export default TextField.extend({
    */
   willDestroyElement() {
     this.itl.destroy();
-  },
-
-  _input() {
-    return document.querySelector(`#${this.elementId}`);
   }
 });
