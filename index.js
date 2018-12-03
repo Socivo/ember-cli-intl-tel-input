@@ -22,11 +22,7 @@ module.exports = {
       app.import(path.join(assetPath, 'js', 'utils.js'), importOptions);
     }
 
-    app.import({
-      development: path.join(assetPath, 'js', 'intlTelInput.js'),
-      production: path.join(assetPath, 'js', 'intlTelInput.js.min')
-    }, importOptions);
-
+    app.import(path.join(assetPath, 'js', 'intlTelInput.js'), importOptions);
     app.import(path.join(assetPath, 'css', 'intlTelInput.css'));
   },
 
